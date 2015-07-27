@@ -10,9 +10,54 @@ db = SQLAlchemy()
 
 
 ##############################################################################
-# Model definitions
+# Model definitions: Users/Movies/Ratings
 
-# Delete this line and put your User/Movie/Ratings model classes here.
+class Users(db.Model):
+    """Users of movie ratings website"""
+
+    __tablename__ = "users"
+
+    user_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
+    email = db.Column(db.String(64), nullable=True)
+    password = db.Column(db.String(64), nullable=True)
+    age = db.Column(db.Integer, nullable=True)
+    zipcode = db.Column(db.String(15), nullable=True)
+
+    def __repr__(self):
+        """Provides helpful information when printed"""
+
+        return "<Users user_id = %s email = %s>" % (self.user_id, self.email)
+
+
+class Movies(db.Model):
+    """Movies in the ratings website."""
+
+    __tablename__="movies"
+
+    movie_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
+    title = db.Column(db.String(64), nullable=False)
+    released_at = db.Column(db.DateTime, nullable=True)
+    imdb_url = db.Column(db.String(200), nullable=True)
+
+    def __repr__(self):
+        """Provides helpful information when printed"""
+
+        return "<Movies movie_id = %s title = %s>" % (self.movie_id, self.title)
+
+class Ratings(db.Model):
+    """Ratings for movies by users."""
+
+    __tablename__="ratings"
+
+    rating_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
+    movie_id = db.Column(db.Integer, nullable=False)
+    user_id = db.Column(db.Integer, nullable=False)
+    score = db.Column(db.Integer, nullable=False)
+
+    def __repr__(self):
+        """Provides helpful information when printed"""
+
+        return "<Ratings rating_id = %s movie_id = %s user_id = %s score = %s>" % (self.rating_id, self.movie_id, self.user_id, self.score)
 
 
 ##############################################################################
