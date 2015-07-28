@@ -13,13 +13,10 @@ def load_users(file_name):
     for line in raw_data:
         row = line.rstrip().split("|")
         user_id = row[0]
-        email = row[1]
-        password = row[2]
-        age = row[3]
+        age = row[1]
         zipcode = row[4]
 
-        user = User(user_id=user_id, email=email,
-        password=password, age=age, zipcode=zipcode)
+        user = User(user_id=user_id, age=age, zipcode=zipcode)
 
         db.session.add(user)
     db.session.commit()
@@ -55,11 +52,11 @@ def load_ratings(file_name):
     raw_data = open(file_name)
 
     for line in raw_data:
-        row = line.rstrip().split(" ")
-        movie_id = row[0]
-        user_id = row[1].rstrip().lstrip() #getting list index out of range error. Stopped EOD. 
-
-        score = row[2].rstrip().lstrip()
+        row = " ".join(line.split())
+        better_row = row.split()
+        movie_id = better_row[0]
+        user_id = better_row[1] #aint no errors now! woot  
+        score = better_row[2]
         
 
         rating = Rating(movie_id=movie_id, user_id=user_id, score=score)
