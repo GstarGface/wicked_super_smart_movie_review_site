@@ -12,7 +12,7 @@ db = SQLAlchemy()
 ##############################################################################
 # Model definitions: Users/Movies/Ratings
 
-class Users(db.Model):
+class User(db.Model):
     """Users of movie ratings website"""
 
     __tablename__ = "users"
@@ -26,10 +26,10 @@ class Users(db.Model):
     def __repr__(self):
         """Provides helpful information when printed"""
 
-        return "<Users user_id = %s email = %s>" % (self.user_id, self.email)
+        return "<User user_id = %s email = %s>" % (self.user_id, self.email)
 
 
-class Movies(db.Model):
+class Movie(db.Model):
     """Movies in the ratings website."""
 
     __tablename__="movies"
@@ -42,9 +42,9 @@ class Movies(db.Model):
     def __repr__(self):
         """Provides helpful information when printed"""
 
-        return "<Movies movie_id = %s title = %s>" % (self.movie_id, self.title)
+        return "<Movie movie_id = %s title = %s>" % (self.movie_id, self.title)
 
-class Ratings(db.Model):
+class Rating(db.Model):
     """Ratings for movies by users."""
 
     __tablename__="ratings"
@@ -57,7 +57,7 @@ class Ratings(db.Model):
     def __repr__(self):
         """Provides helpful information when printed"""
 
-        return "<Ratings rating_id = %s movie_id = %s user_id = %s score = %s>" % (self.rating_id, self.movie_id, self.user_id, self.score)
+        return "<Rating rating_id = %s movie_id = %s user_id = %s score = %s>" % (self.rating_id, self.movie_id, self.user_id, self.score)
 
 
 ##############################################################################
