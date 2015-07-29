@@ -30,7 +30,7 @@ def user_list():
 
     users = User.query.all()
     return render_template("user_list.html", users=users)
-    
+
 
 @app.route('/login', methods=["GET", "POST"])
 def login():
@@ -49,7 +49,16 @@ def login():
 
         return redirect('/')
     
-        
+@app.route('/logout', methods=['GET', 'POST'])  
+def logout():
+    """ Logs the current user out. Clears the session."""
+
+    del session["username"]
+    del session["password"]
+
+    flash("Logged Out")
+
+    return redirect('/')     
 
 if __name__ == "__main__":
     # We have to set debug=True here, since it has to be True at the point

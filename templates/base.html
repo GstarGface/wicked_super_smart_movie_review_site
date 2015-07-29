@@ -5,7 +5,17 @@
 </head>
 
 <body>
-  
+<!-- if user is in the session(logged in): -->
+    
+<!-- if no user in the session -->
+
+{% if "username" in session %}
+    <p>{{session['username']}}</p>
+    <button type="button"><a href='/logout'>Log Out</a></button>
+{% else %}
+   <button type="button"><a href='/login'>Login</a></button>
+{% endif %}
+
   <hr>
 
   {% block content %} put your content here {% endblock %}
