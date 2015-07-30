@@ -5,14 +5,22 @@
 </head>
 
 <body>
-<!-- if user is in the session(logged in): -->
-    
-<!-- if no user in the session -->
 
-{% if "user_id" in session %}
-    <p>{{session['user_id']}}</p>
+
+<ul>
+{% for message in get_flashed_messages()%}
+    <li>{{message}}</li>
+{% endfor %}
+</ul>
+
+
+    
+
+
+{% if "email" in session %}
+    <p>{{session['email']}}</p> <!-- if user is in the session(logged in): -->
     <button type="button"><a href='/logout'>Log Out</a></button>
-{% else %}
+{% else %} <!-- if no user in the session -->
    <button type="button"><a href='/login'>Login</a></button>
 {% endif %}
 

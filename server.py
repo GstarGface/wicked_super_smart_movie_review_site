@@ -10,6 +10,7 @@ from model import User, Rating, Movie, connect_to_db, db
 
 app = Flask(__name__)
 
+
 # Required to use Flask sessions and the debug toolbar
 app.secret_key = "ABC"
 
@@ -35,32 +36,45 @@ def user_list():
 @app.route('/login', methods=["GET", "POST"])
 def login():
     """A form to login to the movie site with your username and password"""
+
     if request.method == "GET":
         return render_template("login_form.html")
 
     else:
         email = request.form.get("email")
-        password = request.form.get("password")
 
-        
-        emails = db.session.query(User.email).all()
 
-        if email in emails:
+        this_user = User.query.filter(User.email == email).first()
+
+
+
+        print this_user
+        print "\n\n\n\n\n"
+
+
+        if this_user:
 
             session["email"] = email
-            session["password"] = password
 
             flash("Thanks %s. You are now logged in!" % (session['email']))
+
+            user_id = this_user.user_id
+    
+            return redirect('/users/' + str(user_id)) #redirect takes a string as an input! 
         else: 
-            user = User(email=email)
-            db.session.add(user)
+            new_user = User(email=email)
+            db.session.add(new_user)
             db.session.commit()
 
-        # user_new = User.query.filter(User.email == email).one()
-        # user_id = user_new.user_id
-    
-        return redirect('/users/' + str(email)) #redirect takes a string as an input! 
-    
+            session["email"] = email
+
+            flash("Thanks %s. Welcome to Movie Ratings! You're logged in. Have fun." % (session['email']))
+
+            user_id = new_user.user_id
+
+            return redirect('/users/' + str(user_id)) #redirect takes a string as an input! 
+
+
 @app.route('/logout', methods=['GET', 'POST'])  
 def logout():
     """ Logs the current user out. Clears the session."""
@@ -73,7 +87,7 @@ def logout():
     return redirect('/')     
 
 
-@app.route('/users/<str:user_id>') # need syntax for variable username 
+@app.route('/users/<string:user_id>') # need syntax for variable username 
 def user_details(user_id):
     """ Displays information about selected user. """
 
@@ -95,5 +109,5 @@ if __name__ == "__main__":
 
     # Use the DebugToolbar
     DebugToolbarExtension(app)
-
+    print "\n\n\nYO\n\n\n"
     app.run()
