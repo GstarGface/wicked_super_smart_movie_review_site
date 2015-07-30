@@ -39,26 +39,52 @@ def login():
         return render_template("login_form.html")
 
     else:
-        username = request.form.get("username")
+        email = request.form.get("email")
         password = request.form.get("password")
 
-        session["username"] = username
-        session["password"] = password
+        
+        emails = db.session.query(User.email).all()
 
-        flash("Thanks %s. You are now logged in!" % (session['username']))
+        if email in emails:
 
-        return redirect('/')
+            session["email"] = email
+            session["password"] = password
+
+            flash("Thanks %s. You are now logged in!" % (session['email']))
+        else: 
+            user = User(email=email)
+            db.session.add(user)
+            db.session.commit()
+
+        # user_new = User.query.filter(User.email == email).one()
+        # user_id = user_new.user_id
+    
+        return redirect('/users/' + str(email)) #redirect takes a string as an input! 
     
 @app.route('/logout', methods=['GET', 'POST'])  
 def logout():
     """ Logs the current user out. Clears the session."""
 
-    del session["username"]
+    del session["email"]
     del session["password"]
 
     flash("Logged Out")
 
     return redirect('/')     
+
+
+@app.route('/users/<str:user_id>') # need syntax for variable username 
+def user_details(user_id):
+    """ Displays information about selected user. """
+
+    user_object = User.query.filter(User.user_id == user_id).one()
+
+    user_id = user_object.user_id
+    email = user_object.email
+    age = user_object.age
+    zipcode = user_object.zipcode
+  
+    return render_template("user_details.html", user_id=user_id, email=email, age=age, zipcode=zipcode)
 
 if __name__ == "__main__":
     # We have to set debug=True here, since it has to be True at the point

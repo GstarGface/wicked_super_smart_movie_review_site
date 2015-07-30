@@ -9,8 +9,8 @@
     
 <!-- if no user in the session -->
 
-{% if "username" in session %}
-    <p>{{session['username']}}</p>
+{% if "user_id" in session %}
+    <p>{{session['user_id']}}</p>
     <button type="button"><a href='/logout'>Log Out</a></button>
 {% else %}
    <button type="button"><a href='/login'>Login</a></button>

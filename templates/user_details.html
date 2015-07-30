@@ -1,0 +1,13 @@
+
+{% extends 'base.html' %}
+{% block content %}
+
+<h1>User Information</h1>
+<ul>
+    <li>User ID: {{user_id}}</li>    
+    <li>Email Address: {{email}}</li>  <!--This will be null for most of them  -->
+    <li>Age: {{ age }}</li>     
+    <li>Zip Code: {{zipcode}} </li>
+</ul>
+
+{% endblock %}
