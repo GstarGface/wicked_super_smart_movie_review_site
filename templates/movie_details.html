@@ -1,0 +1,44 @@
+
+{% extends 'base.html' %}
+{% block content %}
+
+<h1>mOVIE DEETZ</h1>
+<ul>
+    <li> Title: <b>{{title}}</b></li>    
+    <li>Release date: {{released_at}}</li>  <!--This will be null for most of them  -->
+    <li> IMDB link: {{ imdb_url }}</li>     
+    <li>Starring: <a href="https://en.wikipedia.org/wiki/Cool_(aesthetic)"> Carly and Georgia</a> </li>
+</ul>
+
+{% if "email" in session %}
+    <h3>Yo Dude, rate dis flick!</h3>
+ <form action= '/new_rating' method="post">
+      <label for="field-new-rating">Your score: </label>
+      <select name="new-rating" id="field-new-rating">
+        <option value = "1"> 1 (wicked bad)</option>
+        <option value = "2"> 2 (kinda bad)</option>
+        <option value = "3"> 3 (its otay, aight)</option>
+        <option value = "4"> 4 (hella good)</option>
+        <option value = "5"> 5 (Damn good, yo!)</option>
+      <input type = "hidden" name="movie_id" value = "{{movie_id}}"> 
+      <input type="submit">
+    </form>
+{% endif %}
+
+
+
+
+
+
+<h3>All dem rATINGz</h3>
+<h5> (by user)</h5>
+!
+<ul>
+      {% for rating in ratings %}
+          <li> User Number: {{rating.user_id}} , Score:  {{ rating.score }} </li>
+      {% endfor %}
+</ul>
+
+
+
+{% endblock %}
