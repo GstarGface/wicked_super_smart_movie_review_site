@@ -31,7 +31,7 @@ def load_movies(file_name):
     for line in raw_data:
         row = line.rstrip().split("|")
         movie_id = row[0]
-        title = row[1][:-6] #clean to remove (date)
+        title = row[1][:-7] #clean to remove (date)
         if row[2] == "":
             released_at = None
         else:
